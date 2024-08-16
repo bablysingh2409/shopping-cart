@@ -5,19 +5,18 @@ import { Link, Outlet } from "react-router-dom";
 import { useCart } from "../context/cartContext";
 
 function Nav() {
-  const [cartLength, setCartLength] = useState(0);
+//   const [cartLength, setCartLength] = useState(0);
   const {cart}=useCart()
-  useEffect(() => {
-    if (cart.length) {
-      setCartLength(cart.length);
-    }
-  },[cart.length]);
+  console.log("Cart content:", cart); 
+//   useEffect(() => {
+//       setCartLength(cart.length);
+//   },[cart]);
   return (
     <>
       <nav className=" bg-[#2874f0] text-white border-b border-b-gray-400">
         <div className="container flex justify-between h-16 mx-auto">
           <Link
-            href="#"
+            to='/'
             aria-label="Back to homepage"
             className="flex items-center p-2"
           >
@@ -36,11 +35,11 @@ function Nav() {
               <Link href="#" className="flex items-center px-4 -mb-1 ">
                 <FiHeart size={28} />
               </Link>
-              <Link href="#" className="flex items-center px-4 -mb-1 relative">
+              <Link to='/cart' className="flex items-center px-4 -mb-1 relative">
                 <HiOutlineShoppingBag size={28} />
-                {cartLength > 0 && (
+                {cart.length > 0 && (
                   <span className=" z-10 absolute bg-red-500 top-4  left-9 text-white  rounded-full w-4 h-4 flex items-center justify-center text-xs">
-                    {cartLength}
+                    {cart.length}
                   </span>
                 )}{" "}
               </Link>

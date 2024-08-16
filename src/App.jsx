@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "./components/Nav";
 import ProductList from "./pages/ProductList";
-// import { ProductDetails } from "./components/Product";
 import NotFound from "./components/NotFound";
+import Cart from "./components/Cart";
 
 function App() {
   const router = createBrowserRouter([
@@ -11,7 +11,7 @@ function App() {
       element: <Nav />,
       children: [
         { path: "/", element: <ProductList /> },
-        // { path: "/item-details/:id", element: <ProductDetails /> },
+        { path: "/cart", element: <Cart/> },
       ],
       errorElement: <NotFound />,
     },
