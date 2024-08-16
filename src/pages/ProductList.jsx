@@ -1,6 +1,21 @@
 import productData from "../product.json";
+import { useState } from "react";
+import { ProductDetailsModal } from "../components/Product";
 
 function ProductList() {
+  const [selectedProduct, setSelectedProduct] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct([]);
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="flex flex-wrap  justify-center space-x-2 md:w-[100%] place-items-center bg-gray-100">
       {productData.map((item, index) => (
@@ -8,25 +23,20 @@ function ProductList() {
           key={index}
           className="flex flex-col items-center place-items-center justify-items-center sm:my-5 my-0 shadow-sm p-4 gap-1 
           transform transition-transform duration-300 hover:scale-105 bg-white rounded-md"
+          onClick={() => openModal(item)}
         >
-          {/* <Link
-          href={`/collections/${item.attributeSet.item._id}?name=${item.attributeSet.item.itemName}`}
-          key={index}
-        > */}
-          <div className="md:h-[350px] h-72 md:w-[18rem] w-[11rem]">
-            <img
-              className="object-cover h-full w-full "
-              src={item.images[0]}
-              alt="Image"
-            />
-          </div>
+          {/* <Link to={`/item-details/${item.id}`} key={index}> */}
+            <div className="md:h-[350px] h-72 md:w-[18rem] w-[11rem]">
+              <img
+                className="object-cover h-full w-full "
+                src={item.images[0]}
+                alt="Image"
+              />
+            </div>
           {/* </Link> */}
           <p className="text-new-arrival font-book-antiqua text-sm font-bold leading-tight text-center mt-1 mb-1 md:text-base capitalize text-gray-700">
             {item.title}
           </p>
-          {/* <p className="text-new-arrival font-book-antiqua text-sm font-bold leading-tight text-center md:text-base capitalize">
-              {data[index]?.attributeSet.item.sellerItemType}
-            </p> */}
           <p className="text-black text-center font-book-antiqua text-sm font-bold leading-tight uppercase md:text-base">
             ₹ {item.price}
           </p>
@@ -35,6 +45,12 @@ function ProductList() {
           </button>
         </div>
       ))}
+      {isModalOpen && (
+        <ProductDetailsModal
+          product={selectedProduct}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }
