@@ -109,13 +109,13 @@ export default function Cart() {
                     <FaRegTrashCan size={24} className="text-[#2874f0]"/>
                     <span>Remove</span>
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="flex items-center space-x-2 px-2 py-1"
                   >
                     <FaRegHeart size={24} className="text-[#2874f0]"/>
                     <span>Add to favorites</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
