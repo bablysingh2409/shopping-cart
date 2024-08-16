@@ -6,6 +6,7 @@ import Cart from "./components/Cart";
 import CheckoutSuccess from "./components/CheckoutSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/LoginPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <>
+    <Toaster/>
       <RouterProvider router={router} />
     </>
   );
