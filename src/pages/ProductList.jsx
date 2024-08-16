@@ -1,10 +1,12 @@
 import productData from "../product.json";
 import { useState } from "react";
 import { ProductDetailsModal } from "../components/Product";
+import { useCart } from "../context/cartContext";
 
 function ProductList() {
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {handleCartData}=useCart()
 
   const openModal = (product) => {
     setSelectedProduct(product);
@@ -15,6 +17,11 @@ function ProductList() {
     setSelectedProduct([]);
     setIsModalOpen(false);
   };
+
+  const handleCart=(e,item)=>{
+    e.stopPropagation(); 
+    handleCartData(item);
+  }
 
   return (
     <div className="flex flex-wrap  justify-center space-x-2 md:w-[100%] place-items-center bg-gray-100">
@@ -40,7 +47,10 @@ function ProductList() {
           <p className="text-black text-center font-book-antiqua text-sm font-bold leading-tight uppercase md:text-base">
             ₹ {item.price}
           </p>
-          <button className="border-2  border-[#2874f0] p-2 rounded-md bg-[#2874f0] text-white hover:text-[#2874f0] hover:bg-white w-[60%]">
+          <button className="border-2  border-[#2874f0] p-2 rounded-md bg-[#2874f0] text-white
+           hover:text-[#2874f0] hover:bg-white w-[60%]" 
+           onClick={(e) => handleCart(e, item)}
+           >
             Add To Cart
           </button>
         </div>

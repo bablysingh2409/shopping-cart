@@ -1,8 +1,8 @@
 export const ProductDetailsModal = ({ product, onClose }) => {
   if (!product) return <></>;
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-8 rounded-md shadow-lg w-[60%]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center  ">
+      <div className="bg-white p-8 rounded-md shadow-lg w-[60%] ">
         <button onClick={onClose} className="text-red-500 float-right font-extrabold text-xl">
           X
         </button>

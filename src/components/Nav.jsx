@@ -1,9 +1,20 @@
+import { useEffect, useState } from "react";
+import { FiHeart } from "react-icons/fi";
+import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Link, Outlet } from "react-router-dom";
+import { useCart } from "../context/cartContext";
 
 function Nav() {
+  const [cartLength, setCartLength] = useState(0);
+  const {cart}=useCart()
+  useEffect(() => {
+    if (cart.length) {
+      setCartLength(cart.length);
+    }
+  },[cart.length]);
   return (
     <>
-      <nav className=" dark:bg-gray-800 dark:text-gray-100 border-b border-b-gray-400">
+      <nav className=" bg-[#2874f0] text-white border-b border-b-gray-400">
         <div className="container flex justify-between h-16 mx-auto">
           <Link
             href="#"
@@ -23,7 +34,15 @@ function Nav() {
           <ul className="items-stretch hidden space-x-3 md:flex">
             <li className="flex">
               <Link href="#" className="flex items-center px-4 -mb-1 ">
-                Cart
+                <FiHeart size={28} />
+              </Link>
+              <Link href="#" className="flex items-center px-4 -mb-1 relative">
+                <HiOutlineShoppingBag size={28} />
+                {cartLength > 0 && (
+                  <span className=" z-10 absolute bg-red-500 top-4  left-9 text-white  rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                    {cartLength}
+                  </span>
+                )}{" "}
               </Link>
             </li>
           </ul>
@@ -45,7 +64,7 @@ function Nav() {
           </button>
         </div>
       </nav>
-      <Outlet/>
+      <Outlet />
     </>
   );
 }
