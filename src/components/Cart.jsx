@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/cartContext";
 import { FaRegHeart, FaRegTrashCan } from "react-icons/fa6";
 import emptyCart from "../../public/empty_cart.gif";
 
 export default function Cart() {
   const { cart, handleCartData, updateItemQuantity ,setCart} = useCart();
+  const navigate = useNavigate();
 
   const increaseQuantity = (item) => {
     handleCartData(item);
@@ -22,7 +23,17 @@ export default function Cart() {
       return updatedCart;
     });
   };
+  const totalAmount = cart.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
 
+  const handleCheckout = () => {
+    
+      navigate("/checkout-success");
+      setCart([])
+      localStorage.clear()
+  };
 
   if (!cart.length) {
     return (
@@ -67,7 +78,7 @@ export default function Cart() {
                     <p className="text-sm">{product.brand}</p>
                     <div className="flex items-center space-x-2">
                       <button
-                        className="border-2 border-[#2874f0] px-2 rounded-full bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white font-bold text-xl"
+                        className="border border-[#2874f0] px-2 rounded-full bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white font-bold text-xl"
                         onClick={() =>
                           decreaseQuantity(product, product.quantity)
                         }
@@ -78,7 +89,7 @@ export default function Cart() {
                         {product.quantity}
                       </span>
                       <button
-                        className="border-2 border-[#2874f0]  rounded-full px-2 bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white text-xl font-bold"
+                        className="border border-[#2874f0]  rounded-full px-2 bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white text-xl font-bold"
                         onClick={() => increaseQuantity(product)}
                       >
                         +
@@ -112,23 +123,24 @@ export default function Cart() {
         ))}
       </ul>
       <div className="space-y-1 text-right">
-        <p>
+        <p className="text-2xl font-semibold text-gray-700">
           Total amount:
-          <span className="font-semibold"> ₹ 48,967</span>
+          <span className="font-bold text-2xl text-[#2874f0] "> ₹{(totalAmount).toFixed(2)}</span>
         </p>
       </div>
       <div className="flex justify-end space-x-4">
         <Link to="/">
           <button
             type="button"
-            className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            className="rounded-md border border-[#2874f0] px-3 py-2 text-sm font-semibold text-[#2874f0] shadow-sm "
           >
             Back to shop
           </button>
         </Link>
         <button
           type="button"
-          className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          className="rounded-md border border-[#2874f0] px-3 py-2 text-sm font-semibold text-[#2874f0] shadow-sm "
+          onClick={handleCheckout}
         >
           Checkout
         </button>
