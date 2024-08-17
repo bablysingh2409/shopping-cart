@@ -15,7 +15,7 @@ function Login() {
   };
 
   return (
-    <div className="m-auto w-[40%] p-4">
+    <div className="m-auto sm:w-[40%] w-full p-4">
       <h2 className="text-2xl font-bold mb-4 text-[#2874f0]">Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

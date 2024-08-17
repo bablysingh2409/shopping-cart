@@ -60,6 +60,7 @@ function ProductList() {
       : null;
     return item ? item.quantity : 0;
   };
+
   const increaseQuantity = (e, item) => {
     e.stopPropagation();
     handleCartData(item);
@@ -118,7 +119,7 @@ function ProductList() {
                 <img
                   className="h-20 w-8 object-contain"
                   src={item.images[0]}
-                  alt="item.title"
+                  alt={item.title}
                 />
               </div>
               <div className="ml-3 flex items-center font-book-antiqua">
@@ -136,61 +137,60 @@ function ProductList() {
   return (
     <>
       <Toaster />
-
-      <div className="flex flex-wrap  justify-center space-x-2 md:w-[100%] place-items-center bg-gray-100">
-        {productData.map((item, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center place-items-center justify-items-center sm:my-5 my-0 shadow-sm p-4 gap-1 
-          transform transition-transform duration-300 hover:scale-105 bg-white rounded-md"
-            onClick={() => openModal(item)}
-          >
-            <div className="md:h-[350px] h-72 md:w-[18rem] w-[11rem]">
-              <img
-                className="object-cover h-full w-full "
-                src={item.images[0]}
-                alt="Image"
-              />
-            </div>
-            <p className="text-new-arrival font-book-antiqua text-sm font-bold leading-tight text-center mt-1 mb-1 md:text-base capitalize text-gray-700">
-              {item.title}
-            </p>
-            <p className="text-black text-center font-book-antiqua text-sm font-bold leading-tight uppercase md:text-base">
-              ₹ {item.price}
-            </p>
-            {getItemQuantity(item.id) > 0 ? (
-              <div className="flex items-center space-x-2">
-                <button
-                  className="border-2 border-[#2874f0] px-4 rounded-md bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white font-bold text-xl"
-                  onClick={(e) => decreaseQuantity(e, item)}
-                >
-                  -
-                </button>
-                <span className="text-lg font-semibold text-[#2874f0]">
-                  {getItemQuantity(item.id)}
-                </span>
-                <button
-                  className="border-2 border-[#2874f0]  rounded-md px-4  bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white text-xl font-bold"
-                  onClick={(e) => increaseQuantity(e, item)}
-                >
-                  +
-                </button>
+      <div className="container mx-auto p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {productData.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center bg-white rounded-lg shadow-md p-4 transform transition-transform duration-300 hover:scale-105"
+              onClick={() => openModal(item)}
+            >
+              <div className="md:h-72 h-60 w-full">
+                <img
+                  className="object-cover h-full w-full rounded-lg"
+                  src={item.images[0]}
+                  alt={item.title}
+                />
               </div>
-            ) : (
-              <button
-                className="border-2 border-[#2874f0] p-2 rounded-md bg-[#2874f0] text-white
-              hover:text-[#2874f0] hover:bg-white w-[60%]"
-                onClick={(e) => handleCart(e, item)}
-              >
-                Add To Cart
-              </button>
-            )}
-          </div>
-        ))}
-        {isModalOpen && (
-          <ProductDetailsModal product={selectedProduct} onClose={closeModal} />
-        )}
+              <p className="mt-2 text-center text-gray-800 font-semibold text-lg">
+                {item.title}
+              </p>
+              <p className="text-center text-gray-700 font-bold text-xl">
+                ₹ {item.price}
+              </p>
+              {getItemQuantity(item.id) > 0 ? (
+                <div className="flex items-center space-x-2 mt-2">
+                  <button
+                    className="border-2 border-[#2874f0] px-4 rounded-md bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white font-bold text-xl"
+                    onClick={(e) => decreaseQuantity(e, item)}
+                  >
+                    -
+                  </button>
+                  <span className="text-lg font-semibold text-[#2874f0]">
+                    {getItemQuantity(item.id)}
+                  </span>
+                  <button
+                    className="border-2 border-[#2874f0] rounded-md px-4 bg-white text-[#2874f0] hover:bg-[#2874f0] hover:text-white text-xl font-bold"
+                    onClick={(e) => increaseQuantity(e, item)}
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="border-2 border-[#2874f0] p-2 rounded-md bg-[#2874f0] text-white hover:text-[#2874f0] hover:bg-white mt-2 w-full"
+                  onClick={(e) => handleCart(e, item)}
+                >
+                  Add To Cart
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
+      {isModalOpen && (
+        <ProductDetailsModal product={selectedProduct} onClose={closeModal} />
+      )}
     </>
   );
 }
